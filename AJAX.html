@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX验证用户名</title>
+</head>
+<body>
+<form action="test.php" method="post">
+    <label for="username">用户名：</label>
+    <input id="username" type="text" placeholder="请输入用户名" onkeyup="checkName()"  />
+    <input id="show" type="text" style="border-width:0;color: red;"/>
+</form>
+</body>
+<script type="text/javascript">
+    function getxmlhttpobject() {
+        var  xmlhttprequest;
+        if(window.ActiveXObject){
+            xmlhttprequest=new ActiveXObject("Microsoft.XMLHTTP");
+        }else {
+            xmlhttprequest=new XMLHttpRequest();
+        }
+        return xmlhttprequest;
+        }
+    var myxmlhttprequest="";
+    function checkName() {
+        myxmlhttprequest = getxmlhttpobject();
+        if (myxmlhttprequest) {
+            var url = "test.php";
+            var data="username="+getUserName("username");
+            myxmlhttprequest.open("post", url, true);
+            myxmlhttprequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            myxmlhttprequest.onreadystatechange = function () {
+                if (myxmlhttprequest.readyState == 4) {
+                    document.getElementById("show").value= myxmlhttprequest.responseText;
+                } else{
+                }
+            }
+            myxmlhttprequest.send(data);
+        }
+    }
+    function getUserName(id) {
+            return document.getElementById(id).value;
+    }
+
+
+</script>
+</html>
